@@ -34,6 +34,14 @@ void hash_linear_probing::insert(int H[],int key) {//function for inserting data
 	}
 	H[index] = key;
 }
+int hash_linear_probing::search(int H[],int key){
+	int index=hash_function(key);
+	int i=0;
+	while(H[(index+i)%size]!=key){
+		i++;
+	}
+	return (index+i)%size;
+}
 
 void hash_linear_probing::Display_hash(int HT[],int n) {//function for displaying data on screen
 	for (int i = 0; i < n; i++) {
@@ -50,4 +58,6 @@ int main() {
 	h->insert(HT, 35);
 	int n = sizeof(HT) / sizeof(HT[0]);
 	h->Display_hash(HT, n);
+	int index = h->search(HT,25);
+	cout << HT[index];
 }

@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+class hash_linear_probing {//class for linear probing functions
+	int* s;
+	int size;
+public:
+	hash_linear_probing(int size);
+	void insert(int H[],int key);
+	int probe(int H[], int key);
+	void Display_hash(int HT[], int n);
+	int hash_function(int key) {//function for maaping of value into hash table
+		return key % size;
+	}
+};
+
+hash_linear_probing::hash_linear_probing(int size) {//constructor
+	this->size = size;
+	s = new int[this->size];
+}
+
+int hash_linear_probing::probe(int H[],int key) {//function for probing
+	int index = hash_function(key);
+	int i = 0;
+	while (H[(index + i) % size] != 0) {
+		i++;
+	}
+	return (index + i) % size;
+}
+void hash_linear_probing::insert(int H[],int key) {//function for inserting data into hash table
+	int index = hash_function(key);
+	if (H[index] != 0) {
+		index = probe(H,key);
+	}
+	H[index] = key;
+}
+
+void hash_linear_probing::Display_hash(int HT[],int n) {//function for displaying data on screen
+	for (int i = 0; i < n; i++) {
+		if (HT[i] != 0) {
+			cout << HT[i] << " ";
+		}
+	}
+}
+int main() {
+	int HT[10] = { 0 };
+	hash_linear_probing* h = new hash_linear_probing(10);
+	h->insert(HT, 12);
+	h->insert(HT, 25);
+	h->insert(HT, 35);
+	int n = sizeof(HT) / sizeof(HT[0]);
+	h->Display_hash(HT, n);
+}
